@@ -1,0 +1,1 @@
+rpm -e --noscripts yourPackage
