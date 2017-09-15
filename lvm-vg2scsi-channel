@@ -1,0 +1,12 @@
+echo "connected disks" > /root/disks.txt; echo "physical volumes" > /root/physical_volumes.txt; ls -ld /sys/block/sd*/device | awk '{print$9}' | cut -d \/ -f 4 >> /root/disks.txt; pvs | awk '{print$1}' | cut -d \/ -f 3 | sort >> /root/physical_volumes.txt; diff -y /root/disks.txt /root/physical_volumes.txt
+#
+#formatted version below
+#
+echo -en 'DISK\t\tVG\n-----\t\t--\n' ; for i in /sys/block/sd*/device; do echo -n $(ls -ld $i | cut -d'/' -f 4,8 | sed 's/\// /gi') ; echo -ne '\t' ; pvs | tail -n +2 | grep $(echo $i | cut -d'/' -f4) | awk '{print $2}' ; echo ; done
+#
+#output should look like:
+#
+#   DISK            VG
+#   -----           --
+#   sda 2:0:0:0
+#   sdb 2:0:1:0     os
