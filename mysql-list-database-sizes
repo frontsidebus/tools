@@ -1,0 +1,7 @@
+SELECT table_schema AS "Database name", SUM(data_length + index_length) / 1024 / 1024 AS "Size (MB)" FROM information_schema.TABLES GROUP BY table_schema;
+
+If you want to just list out the number of databases
+
+SELECT count(*) FROM information_schema.SCHEMATA WHERE schema_name NOT IN ('mysql','information_schema');
+
+gets you a count of all databases in the instance
