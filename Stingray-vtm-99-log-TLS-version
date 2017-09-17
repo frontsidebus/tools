@@ -1,0 +1,11 @@
+ssl.clientCipher() 
+ 
+Returns the cipher used by the client to SSL-encrypt the connection. It returns an empty string if the connection was not SSL-encrypted. 
+The string returned contains the cipher algorithm, SSL version and effective cipher strength, such as: 
+ 
+SSL_RSA_WITH_AES_128_CBC_SHA256, version=TLSv1.2**this is the part you need**, bits=128
+
+Example script, that sends the string to log.info: 
+# Get the encryption cipher 
+$cipher = ssl.clientCipher(); 
+log.info( "Encrypted with ".$cipher );
