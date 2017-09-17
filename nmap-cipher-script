@@ -1,0 +1,6 @@
+#It turns out nmap is a nifty tool for getting a list of ciphers supported by whatever is serving up https content on your server: 
+#You'll want to nmap with the flags below, and designate the host ip you are scanning, as well as the port. 
+#BE CAREFUL WITH NMAP, BECAUSE IF YOU DON'T KNOW WHAT YOU ARE DOING, YOU CAN VERY EASILY START TRIGGERING ALARMS BY SCANNING HOSTS WITH RECKLESS ABANDON.THE BELOW IS SAFE BECAUSE YOU ARE EXPLICITY DEFINING THE PORT, SO THE CONNECTION IS EFFECTIVELY THE SAME AS THE TLS HANDSHAKE THAT TAKES PLACE DURING AT THE BEGINNING OF ANY HTTPS CONNECTION.  DO NOT JUST RUN NMAP AGAINST A HOST IN OUR NETWORK WITHOUT ANY FLAGS. AT BEST SOC WILL COME TELL YOU TO STOP. AT WORST... RGE. 
+#
+#That said, the below uses nmap to "scan" for supported ciphers on a specific host, using a specific port (in this case 443): 
+nmap --script ssl-enum-ciphers -p 443 <ip address>
