@@ -157,3 +157,22 @@ nmap --script ssl-enum-ciphers -p 443 <ip address>
 ```
 systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
 ```
+***Powershell Promote to Domain Controller***
+```
+#
+# Windows PowerShell script for AD DS Deployment
+#
+Import-Module ADDSDeployment
+Install-ADDSForest `
+-CreateDnsDelegation:$false `
+-DatabasePath "C:\Windows\NTDS" `
+-DomainMode "Win2012R2" `
+-DomainName "rogue-2.local" `
+-DomainNetbiosName "ROGUE-2" `
+-ForestMode "Win2012R2" `
+-InstallDns:$true `
+-LogPath "C:\Windows\NTDS" `
+-NoRebootOnCompletion:$false `
+-SysvolPath "C:\Windows\SYSVOL" `
+-Force:$true
+```
