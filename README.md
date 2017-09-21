@@ -116,3 +116,18 @@ Get-ClusterResource | Sort-Object -Property OwnerGroup, Name | Format-List | Out
 Get-ClusterResource | Sort-Object -Property OwnerGroup, Name | Get-ClusterResourceDependency | Format-List | Out-File C:\Users\Administrator\Downloads\cluster_info.txt -Append
 Get-ClusterResource | Get-ClusterOwnerNode | Where-Object -FilterScript { $_.OwnerNodes.Count -ne ( Get-ClusterNode ).Count } | Format-List | Out-File C:\Users\Administrator\Downloads\cluster_info.txt -Append
 ```
+***Linux LVM - translate Volume Group to scsi channel***
+```sh
+echo "connected disks" > /root/disks.txt; echo "physical volumes" > /root/physical_volumes.txt; ls -ld /sys/block/sd*/device | awk '{print$9}' | cut -d \/ -f 4 >> /root/disks.txt; pvs | awk '{print$1}' | cut -d \/ -f 3 | sort >> /root/physical_volumes.txt; diff -y /root/disks.txt /root/physical_volumes.txt
+```
+*alternate formatted version, thanks to Jeff V.*
+```sh
+echo -en 'DISK\t\tVG\n-----\t\t--\n' ; for i in /sys/block/sd*/device; do echo -n $(ls -ld $i | cut -d'/' -f 4,8 | sed 's/\// /gi') ; echo -ne '\t' ; pvs | tail -n +2 | grep $(echo $i | cut -d'/' -f4) | awk '{print $2}' ; echo ; done
+```
+*output should look like:*
+```
+#   DISK            VG
+#   -----           --
+#   sda 2:0:0:0
+#   sdb 2:0:1:0     os
+```
