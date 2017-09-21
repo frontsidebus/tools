@@ -153,3 +153,7 @@ SELECT count(*) FROM information_schema.SCHEMATA WHERE schema_name NOT IN ('mysq
 ```sh
 nmap --script ssl-enum-ciphers -p 443 <ip address>
 ```
+***Powershell Get OS info***
+```
+systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
+```
