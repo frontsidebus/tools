@@ -194,3 +194,103 @@ CPU NODE SOCKET CORE L1d:L1i:L2:L3 ONLINE
 ```sh
 echo 1 > /sys/devices/system/cpu/cpu2/online
 ```
+***Linux Debugging website response times***
+*stolen from https://gist.github.com/manifestinteractive/ce8dec10dcb4725b8513*
+```
+\n
+=============  HOST:  ==========\n
+\n
+           local_ip:  %{local_ip}\n
+         local_port:  %{local_port}\n
+          remote_ip:  %{remote_ip}\n
+        remote_port:  %{remote_port}\n
+\n
+=======  CONNECTION:  ==========\n
+\n
+       http_version:  %{http_version}\n
+          http_code:  %{http_code}\n
+       http_connect:  %{http_connect}\n
+       num_connects:  %{num_connects}\n
+      num_redirects:  %{num_redirects}\n
+       redirect_url:  %{redirect_url}\n
+\n
+=============  FILE:  ==========\n
+\n
+       content_type:  %{content_type}\n
+ filename_effective:  %{filename_effective}\n
+     ftp_entry_path:  %{ftp_entry_path}\n
+      size_download:  %{size_download}\n
+        size_header:  %{size_header}\n
+       size_request:  %{size_request}\n
+        size_upload:  %{size_upload}\n
+     speed_download:  %{speed_download}\n
+       speed_upload:  %{speed_upload}\n
+  ssl_verify_result:  %{ssl_verify_result}\n
+      url_effective:  %{url_effective}\n
+\n
+===  TIME BREAKDOWN:  ==========\n
+\n
+    time_appconnect:  %{time_appconnect}\n
+       time_connect:  %{time_connect}\n
+    time_namelookup:  %{time_namelookup}\n
+   time_pretransfer:  %{time_pretransfer}\n
+      time_redirect:  %{time_redirect}\n
+ time_starttransfer:  %{time_starttransfer}\n
+                      ----------\n
+         time_total:  %{time_total}\n
+\n
+```
+*stick the above somewhere it can be referenced later*
+```sh
+#drop this in your .bash_profile
+alias sniff='curl -w "@/Users/pbryant/sniff.txt" -o /dev/null -s'
+```
+*example output:*
+```sh
+C02JD2ZDDKQ5:~ pbryant$ sniff google.com
+
+=============  HOST:  ==========
+
+           local_ip:  127.0.0.1
+         local_port:  53409
+          remote_ip:  172.217.9.174
+        remote_port:  80
+
+=======  CONNECTION:  ==========
+
+curl: unknown --write-out variable: 'http_version'
+       http_version:  
+          http_code:  301
+       http_connect:  000
+       num_connects:  1
+      num_redirects:  0
+       redirect_url:  http://www.google.com/
+
+=============  FILE:  ==========
+
+       content_type:  text/html; charset=UTF-8
+ filename_effective:  /dev/null
+     ftp_entry_path:  
+      size_download:  219
+        size_header:  321
+       size_request:  74
+        size_upload:  0
+     speed_download:  2853.000
+       speed_upload:  0.000
+  ssl_verify_result:  0
+      url_effective:  HTTP://google.com/
+
+===  TIME BREAKDOWN:  ==========
+
+    time_appconnect:  0.000
+       time_connect:  0.015
+    time_namelookup:  0.014
+   time_pretransfer:  0.015
+      time_redirect:  0.000
+ time_starttransfer:  0.077
+                      ----------
+         time_total:  0.077
+
+C02JD2ZDDKQ5:~ pbryant$ 
+```
+
