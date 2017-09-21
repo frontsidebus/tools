@@ -176,3 +176,21 @@ Install-ADDSForest `
 -SysvolPath "C:\Windows\SYSVOL" `
 -Force:$true
 ```
+***Linux Hot CPU add (system doesn't recognize hot added CPU's)***
+*check for any CPU's listed as "NO" for "online"*
+```sh
+lscpu -a --extended
+```
+*output should give you something like:*
+```
+[root@LAB01-01 ~]# lscpu -a --extended
+CPU NODE SOCKET CORE L1d:L1i:L2:L3 ONLINE
+0 0 0 0 0:0:0:0 yes
+1 0 1 1 1:1:1:1 yes
+2 - - - ::: no
+3 - - - ::: no
+```
+*then use the below to online the CPU(s)*
+```sh
+echo 1 > /sys/devices/system/cpu/cpu2/online
+```
