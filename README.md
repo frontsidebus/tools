@@ -93,3 +93,26 @@ nice -n 19 find $FS -mount -type f -print0 2>/dev/null| xargs -0 du -k | sort -r
 ```sh
 FS='./';resize;clear;date;df -h $FS; echo "Largest Directories:"; nice -n19 find $FS -mount -type d -print0 2>/dev/null|xargs -0 du -k|sort -runk1|head -n20|awk '{printf "%8d MB\t%s\n",($1/1024),$NF}';echo "Largest Files:"; nice -n 19 find $FS -mount -type f -print0 2>/dev/null| xargs -0 du -k | sort -rnk1| head -n20 |awk '{printf "%8d MB\t%s\n",($1/1024),$NF}';
 ```
+
+***Windows dump failover configuration***
+```
+# Ugly script that gathers cluster info for 
+# Failover Cluster manager in Server 2012
+# Failover ip's and the network configuration are both dropped into a backup file
+# Cluster configuration is dropped into a separate file
+#
+# This probably should have been done better...
+#
+#
+ipconfig /all | Out-File C:\Users\administrator\Downloads\ipconfig_pre.txt
+Get-ClusterResource | where {$_.resourcetype -eq "IP Address"} | format-list | Out-File C:\Users\administrator\Downloads\ipconfig_pre.txt -Append
+Import-Module -Name FailoverClusters
+Get-Cluster | Format-List | Out-File C:\Users\Administrator\Downloads\cluster_info.txt
+Get-ClusterAccess | Format-List | Out-File C:\Users\Administrator\Downloads\cluster_info.txt -Append
+Get-ClusterNode | Format-List | Out-File C:\Users\Administrator\Downloads\cluster_info.txt -Append
+Get-ClusterQuorum | Format-List | Out-File C:\Users\Administrator\Downloads\cluster_info.txt -Append
+Get-ClusterGroup | Format-List | Out-File C:\Users\Administrator\Downloads\cluster_info.txt -Append
+Get-ClusterResource | Sort-Object -Property OwnerGroup, Name | Format-List | Out-File C:\Users\Administrator\Downloads\cluster_info.txt -Append
+Get-ClusterResource | Sort-Object -Property OwnerGroup, Name | Get-ClusterResourceDependency | Format-List | Out-File C:\Users\Administrator\Downloads\cluster_info.txt -Append
+Get-ClusterResource | Get-ClusterOwnerNode | Where-Object -FilterScript { $_.OwnerNodes.Count -ne ( Get-ClusterNode ).Count } | Format-List | Out-File C:\Users\Administrator\Downloads\cluster_info.txt -Append
+```
