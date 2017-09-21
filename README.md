@@ -136,3 +136,18 @@ echo -en 'DISK\t\tVG\n-----\t\t--\n' ; for i in /sys/block/sd*/device; do echo -
 Set-ItemProperty -Path HKLM:\Software\Microsoft\Windows\CurrentVersion\policies\system -Name EnableLUA -Value 1 
 Set-ItemProperty -Path HKLM:\Software\Microsoft\Windows\CurrentVersion\policies\system -Name ConsentPromptBehaviorAdmin -Value 4
 ```
+***Linux - mysql - list sizes of all databases in instance***
+*this is a read HEAVY query and should only be run off-production hours*
+```
+mysql>SELECT table_schema AS "Database name", SUM(data_length + index_length) / 1024 / 1024 AS "Size (MB)" FROM information_schema.TABLES GROUP BY table_schema;
+```
+*use this to list count by name w/o getting sizes*
+```
+SELECT count(*) FROM information_schema.SCHEMATA WHERE schema_name NOT IN ('mysql','information_schema');
+```
+***Linux - nmap - list supported ciphers on endpoint***
+*BE CAREFUL WITH NMAP, BECAUSE IF YOU DON'T KNOW WHAT YOU ARE DOING, YOU CAN VERY EASILY START TRIGGERING ALARMS BY SCANNING HOSTS WITH RECKLESS ABANDON.THE BELOW IS SAFE BECAUSE YOU ARE EXPLICITY DEFINING THE PORT, SO THE CONNECTION IS EFFECTIVELY THE SAME AS THE TLS HANDSHAKE THAT TAKES PLACE DURING AT THE BEGINNING OF ANY HTTPS CONNECTION.  DO NOT JUST RUN NMAP AGAINST A HOST IN OUR NETWORK WITHOUT ANY FLAGS. AT BEST SOC WILL COME TELL YOU TO STOP. AT WORST... RGE.*
+*That said, the below uses nmap to "scan" for supported ciphers on a specific host, using a specific port (in this case 443)*
+```sh
+nmap --script ssl-enum-ciphers -p 443 <ip address>
+```
