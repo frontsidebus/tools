@@ -131,3 +131,8 @@ echo -en 'DISK\t\tVG\n-----\t\t--\n' ; for i in /sys/block/sd*/device; do echo -
 #   sda 2:0:0:0
 #   sdb 2:0:1:0     os
 ```
+***Windows Enable UAC***
+```
+Set-ItemProperty -Path HKLM:\Software\Microsoft\Windows\CurrentVersion\policies\system -Name EnableLUA -Value 1 
+Set-ItemProperty -Path HKLM:\Software\Microsoft\Windows\CurrentVersion\policies\system -Name ConsentPromptBehaviorAdmin -Value 4
+```
