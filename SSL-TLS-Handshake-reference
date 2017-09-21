@@ -1,7 +1,7 @@
-SSL handshake overview
+#SSL handshake overview
+#
+
 SSL communication consists of a series of messages exchanged between two parties (client and server). The SSL handshake between a client and server consists of nine steps, and appears as follows:
-
-
 
 The SSL messages determine the parameters of the encrypted communication channel that the two parties will use. It is important that the client and server agree on the message details, such as the protocol version, cipher suites, secure renegotiation, or client certificate requests. Otherwise the handshake will fail. The SSL handshake has the following messaging components:
 ClientHello
@@ -31,4 +31,3 @@ Finished
 Each party sends a Finished message under the new algorithm, keys and secrets. The Finished message indicates that the handshake is complete, and the parties may begin to exchange application layer data.
 Resumed SSL sessions
 A resumed SSL session implements session identifier (session ID) to re-establish a previously negotiated session. When an SSL handshake is resumed, the client presents the session ID from the previously negotiated session. If the server finds the session ID in its cache and accepts the resumed session, it sends back the same session ID and the parties skip the public key operation. If the server does not accept the resumed session, it issues a new session ID and implements the full SSL handshake. The resumed SSL handshake between a client and server consists of the following steps:
-
