@@ -3,7 +3,7 @@
 Anything overtly dangerous, I have tried to comment as such. Most of the other things included here are read only commands or scripts that could be useful depending on the situation 
 
 
-*Stingray VTM Log TLS Version (TS)*
+**Stingray VTM Log TLS Version (TS)**
 ```py
 #Example script, that sends the string to log.info:
 #Get the encryption cipher
@@ -11,7 +11,7 @@ $cipher = ssl.clientCipher();
 log.info( "Encrypted with ".$cipher );
 ```
 
-*Python script for debugging TLS connections, specifically "client-hello"*
+**Python script for debugging TLS connections, specifically "client-hello"**
 ```
 #!/usr/bin/env python
 # Hack-and-slash derived from https://github.com/pquerna/tls-client-hello-stats
@@ -74,3 +74,17 @@ def main(argv):
 if __name__ == "__main__":
     main(sys.argv)
 ```
+
+**Linux Disk Usage Analysis**
+```sh
+#!/bin/bash
+#
+#Run this inside the parent directory, it will read recursively...
+#
+FS='./';resize;clear;date;df -h $FS; echo "Largest Directories:"
+#so we don't bury the machine running these read heavy commands
+nice -n19 find $FS -mount -type d -print0 2>/dev/null|xargs -0 du -k|sort -runk1|head -n20|awk '{printf "%8d MB\t%s\n",($1/1024),$NF}'
+#output to standard out
+echo "Largest Files:"
+#probably a better way to do this, but again we nice it so we don't bury the machine in io
+nice -n 19 find $FS -mount -type f -print0 2>/dev/null| xargs -0 du -k | sort -rnk1| head -n20 |awk '{printf "%8d MB\t%s\n",($1/1024),$NF}'
