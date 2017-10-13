@@ -1,0 +1,10 @@
+#!/bin/bash
+#set your sysvinit service here based on service name string
+SVC=MyService
+#
+if [[ -z $(/etc/init.d/$SVC status) ]]
+then 
+  echo "$SVC is down..."
+else 
+  echo "$SVC is up..."
+fi
