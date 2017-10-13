@@ -293,6 +293,8 @@ curl: unknown --write-out variable: 'http_version'
 
 C02JD2ZDDKQ5:~ pbryant$ 
 ```
+
 ***check if sysVinit service is running using exit code, then performance a conditional action***
+```sh
 if [[ -z $(/etc/init.d/MyService status) ]]; then echo "MyService is down "; else echo "MyService is up "; fi;
 ```
