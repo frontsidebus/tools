@@ -295,3 +295,4 @@ C02JD2ZDDKQ5:~ pbryant$
 ```
 ***check if sysVinit service is running using exit code, then performance a conditional action***
 if [[ -z $(/etc/init.d/MyService status) ]]; then echo "MyService is down "; else echo "MyService is up "; fi;
+```
