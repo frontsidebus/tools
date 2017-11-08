@@ -1,0 +1,4 @@
+wget http://source.wiredtiger.com/releases/wiredtiger-2.7.0.tar.bz2
+tar xvf wiredtiger-2.7.0.tar.bz2
+cd wiredtiger-2.7.0
+make
