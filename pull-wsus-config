@@ -1,0 +1,2 @@
+Get-itemproperty HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU
+Get-itemproperty HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate
