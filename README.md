@@ -298,3 +298,9 @@ C02JD2ZDDKQ5:~ pbryant$
 ```sh
 if [[ -z $(/etc/init.d/MyService status) ]]; then echo "MyService is down "; else echo "MyService is up "; fi;
 ```
+
+***powershell get version of windows OS in readable format***
+```
+(Get-WmiObject -class Win32_OperatingSystem).Caption
+```
+
