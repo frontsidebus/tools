@@ -295,7 +295,7 @@ C02JD2ZDDKQ5:~ pbryant$
 ```
 
 ***check if sysVinit service is running using exit code, then performance a conditional action***
-```sh
+```
 if [[ -z $(/etc/init.d/MyService status) ]]; then echo "MyService is down "; else echo "MyService is up "; fi;
 ```
 
@@ -304,3 +304,30 @@ if [[ -z $(/etc/init.d/MyService status) ]]; then echo "MyService is down "; els
 (Get-WmiObject -class Win32_OperatingSystem).Caption
 ```
 
+***Ubuntu 10.04 get ip's from interface***
+```
+INTERFACE_LABEL=eth0
+ip addr | grep 'inet ' | grep $INTERFACE_LABEL | awk '{print$2}' | cut -d "/" -f 1
+```
+
+***DDOS Attack - Grab and Parse Traffic***
+```
+###1 - Dump traffic out: 
+tcpdump -i eth0 dst port 80 or dst port 443 -nn > /root/dump.txt
+###2 - Parse dump for top 50 source ip's by total recieved requests
+cat /root/dump.txt | awk '{print$3}' | cut -d "." -f 1-4 | sort | uniq -c | sort -rn | head -n 50
+```
+
+***Parsing Apache Logs***
+```
+##LAMP - Plesk - Ubuntu
+##Top 20 Source Ip's
+##1 - old logs are usually in .processed: 
+find /var/www/vhosts/. -name access_log.processed -exec grep 'DD/Mon/YEAR:time' {} \; | awk '{print$1}' | sort | uniq -c | sort -rn | head -n 20
+##2 - current logs are usually in access_log
+find /var/www/vhosts/. -name access_log -exec grep 'DD/Mon/YEAR:time' {} \; | awk '{print$1}' | sort | uniq -c | sort -rn | head -n 20
+##Top 20 Requests
+find /var/www/vhosts/. -name access_log.processed -exec grep 'DD/Mon/YEAR:time' {} \; | awk '{print$7}' | sort | uniq -c | sort -rn | head -n 20
+##3 - Loop through and count total lines by hour into standard out: 
+n=0;while [ $n -le 9 ];do echo $n"am CDT";find /var/www/. -name access.log -exec grep "02/May/2016:0$n" {} \; | wc -l;n=$(( n+1 )); done
+```
