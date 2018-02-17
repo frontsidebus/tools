@@ -331,3 +331,16 @@ find /var/www/vhosts/. -name access_log.processed -exec grep 'DD/Mon/YEAR:time' 
 ##3 - Loop through and count total lines by hour into standard out: 
 n=0;while [ $n -le 9 ];do echo $n"am CDT";find /var/www/. -name access.log -exec grep "02/May/2016:0$n" {} \; | wc -l;n=$(( n+1 )); done
 ```
+***Powershell WSUS Usefuls***
+```
+##Get Current Status
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\" | Format-List -Property WUServer,WUStatusServer
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\" | Format-List -Property UseWUServer, AUOptions, DetectionFrequencyEnabled,DetectionFrequency,ScheduledInstallDay,ScheduledInstallTime, AlwaysAutoRebootAtScheduledTime, AlwaysAutoRebootAtScheduledTimeMinutes
+##Update values
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\" -Name WUServer -Value 'http://wsus.example.com'
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\" -Name WUStatusServer -Value 'http://wsus.example.com'
+```
+***Powershell Dump Cluster IP's (troubleshooting ip conflict errors)***
+```
+Get-ClusterResource | where {$_.resourcetype -eq "IP Address"} | ft -wrap -autosize
+```
