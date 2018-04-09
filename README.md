@@ -344,3 +344,7 @@ Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\
 ```
 Get-ClusterResource | where {$_.resourcetype -eq "IP Address"} | ft -wrap -autosize
 ```
+***Linux remove block device from machine***
+```
+echo 1 >  /sys/class/scsi_device/h:c:t:l/device/delete
+```
