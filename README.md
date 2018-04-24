@@ -352,3 +352,7 @@ echo 1 >  /sys/class/scsi_device/h:c:t:l/device/delete
 ```
 (\d{1,3}\.){3}\d{1,3}
 ```
+***pull source ip ssh login failures from secure logs***
+```
+grep "failure;" /var/log/secure | awk -F "=" '{print$7}' | awk '{print$1}' | sort | uniq -c | sort -rn
+```
