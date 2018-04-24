@@ -348,3 +348,5 @@ Get-ClusterResource | where {$_.resourcetype -eq "IP Address"} | ft -wrap -autos
 ```
 echo 1 >  /sys/class/scsi_device/h:c:t:l/device/delete
 ```
+***ip address regex match***
+(\d{1,3}\.){3}\d{1,3}
