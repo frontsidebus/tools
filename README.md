@@ -358,3 +358,8 @@ echo 1 >  /sys/class/scsi_device/h:c:t:l/device/delete
 ```
 grep "failure;" /var/log/secure | awk -F "=" '{print$7}' | awk '{print$1}' | sort | uniq -c | sort -rn
 ```
+***reboot from bash init
+```
+echo 1 > /proc/sys/kernel/sysrq
+echo b > /proc/sysrq-trigger
+```
