@@ -363,3 +363,8 @@ grep "failure;" /var/log/secure | awk -F "=" '{print$7}' | awk '{print$1}' | sor
 echo 1 > /proc/sys/kernel/sysrq
 echo b > /proc/sysrq-trigger
 ```
+**get status of dd while it's still running**
+#dd will listen for a signal to display progress. you can send this signal using kill directly to the pid
+```
+kill -USR1 $(pgrep ^dd)
+```
