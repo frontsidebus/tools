@@ -368,3 +368,29 @@ echo b > /proc/sysrq-trigger
 ```
 kill -USR1 $(pgrep ^dd)
 ```
+```
+***Traceroute Whois***
+```
+# traceroute to endpoint using regular icmp traceroute, then pull OriginAS and NetName from whois from each hop
+#
+[root@fedora-lab ~]# traceroute -n google.com > trace.txt; for i in $(awk '{print$2}' trace.txt | grep -v '\*' | grep -v 'to'); do echo $i;  whois $i | grep OriginAS; whois $i | grep NetName; done
+68.183.64.254
+OriginAS:
+NetName:        DO-13
+138.197.250.170
+OriginAS:
+NetName:        DIGITALOCEAN-16
+209.85.175.196
+OriginAS:
+NetName:        GOOGLE
+108.170.252.1
+OriginAS:       AS15169
+NetName:        GOOGLE
+74.125.37.125
+OriginAS:
+NetName:        GOOGLE
+172.217.18.14
+OriginAS:       AS15169
+NetName:        GOOGLE
+[root@fedora-lab ~]#
+```
