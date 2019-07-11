@@ -394,3 +394,7 @@ OriginAS:       AS15169
 NetName:        GOOGLE
 [root@fedora-lab ~]#
 ```
+```
+response time with curl
+stolen from https://blog.josephscott.org/2011/10/14/timing-details-with-curl/
+```
